@@ -1,0 +1,9 @@
+
+{% for category in categories %}
+  <a href="{% url 'category' category.id %}"><p>{{ category }}</p> <hr></a>
+{% endfor %}
+
+{% if recipe_details or my_recipes or category %}
+{{ category }} <hr>
+  <a href="{{request.META.HTTP_REFERER}}"> <button class="btn btn-light"> ↩ Previous page </button></a> <br><br>
+{% endif %}

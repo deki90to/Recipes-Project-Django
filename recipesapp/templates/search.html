@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="search-wrapper">
+  <div class="search-left">
+    You searched "<b>{{q}}</b>" <hr>
+    <a href="{{request.META.HTTP_REFERER}}"> <button class="btn btn-light"> ↩ Previous page </button></a>
+  </div>
+  <div class="row row-cols-1 row-cols-md-3 g-4" style="padding: 1%; padding-top: 4%;">
+  {% if searched %}
+    {% for search in searched %}
+      <div class="col">
+        <div class="card">
+        {% if search.image %}
+          <img src="{{ search.image.url }}" width="100%" height="100%" class="card-img-top" alt="...">
+        {% else %}
+          <img src="https://www.kieranlane.com/wp-content/themes/gonzo/images/no-image-featured-image.png" width="100%" height="100%">
+        {% endif %}
+        <div class="card-body">
+          <h5 class="card-title">{{ search.recipe_name }}</h5>
+          <p class="card-text">{{ search.recipe_text|truncatechars:200 }} <hr> 
+            <a href="{% url 'recipe_details' search.id %}"> Read more </a> 
+            <div style="float: right;"> <small>{{ search.likes.count }} 👍  {{ search.dislikes.count }} 👎 </small> {{ search.no_likes }}  </div>
+          </p>
+        </div>
+        </div>
+      </div> 
+    {% endfor %}
+  {% else %}
+    No results...
+  {% endif %}
+  </div>
+</div>
+{% endblock %}
